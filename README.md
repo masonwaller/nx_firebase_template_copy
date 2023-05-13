@@ -1,0 +1,1 @@
+# nx_firebase_template
