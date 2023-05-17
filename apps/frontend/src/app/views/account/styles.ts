@@ -1,0 +1,1 @@
+export const greyBorderClassName = 'sm:border-t sm:border-gray-200';
