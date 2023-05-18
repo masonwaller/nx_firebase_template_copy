@@ -1,4 +1,4 @@
-import React, { ReactHTMLElement } from 'react';
+import React from 'react';
 
 interface Props extends React.HTMLAttributes<HTMLSpanElement> {
   message: string;
