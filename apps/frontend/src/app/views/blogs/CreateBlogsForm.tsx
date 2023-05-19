@@ -1,6 +1,7 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { UserContext } from '../../app';
 import { createBlog, updateBlog } from '../../api-client/apiModules/blogs';
 
@@ -8,7 +9,7 @@ interface CreateBlogProps {
     addNewBlog: (value: any) => void;
     updateBlogList: (blogId: string, data: any) => void;
     setCreateBlogModal: (value: boolean) => void;
-    editBlogId: string | null;
+    editBlog: any;
 }
 export const CreateBlogsForm = (props: CreateBlogProps) => {
 
@@ -18,6 +19,15 @@ export const CreateBlogsForm = (props: CreateBlogProps) => {
     const [description, setDescription] = React.useState('');
     const [blog, setBlog] = React.useState('');
     const [imageUrl, setImageUrl] = React.useState('');
+
+    useEffect(() => {
+        if(props.editBlog){
+            setTitle(props.editBlog.title || '');
+            setDescription(props.editBlog.description || '');
+            setBlog(props.editBlog.blog || '');
+            setImageUrl(props.editBlog.imageUrl || '');
+        }
+    }, [props.editBlog])
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,9 +40,9 @@ export const CreateBlogsForm = (props: CreateBlogProps) => {
             imageUrl,
             author: user.id
         }
-        if(props.editBlogId){
-            await updateBlog(props.editBlogId, blogData);
-            props.updateBlogList(props.editBlogId, blogData)
+        if(props.editBlog.id){
+            await updateBlog(props.editBlog.id, blogData);
+            props.updateBlogList(props.editBlog.id, blogData)
         } else {
             const res = await createBlog(blogData);
             //have to get the new blog ID from the response once backend is set up
@@ -48,6 +58,9 @@ export const CreateBlogsForm = (props: CreateBlogProps) => {
   };
 
   return (
+    <>
+    {!user.id ? 
+    <h3>Must Sign In to Create or Edit a Blog</h3> :
     <form onSubmit={(e) => onSubmit(e)}>
       <label
         htmlFor="title"
@@ -73,6 +86,7 @@ export const CreateBlogsForm = (props: CreateBlogProps) => {
         name="description"
         id="description"
         className="w-full"
+        value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
       <label
@@ -86,6 +100,7 @@ export const CreateBlogsForm = (props: CreateBlogProps) => {
         name="blog"
         id="blog"
         className="w-full"
+        value={blog}
         onChange={(e) => setBlog(e.target.value)}
       />
       <label
@@ -104,5 +119,7 @@ export const CreateBlogsForm = (props: CreateBlogProps) => {
 
       <button type="submit" className="mt-3 p-3 bg-blue-400 rounded-md">Submit</button>
     </form>
+    }
+    </>
   );
 };

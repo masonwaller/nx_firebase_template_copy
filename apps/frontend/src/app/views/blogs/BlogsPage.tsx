@@ -1,13 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BlogsList } from './BlogsList';
 import Modal from '../../components/modal/modal';
 import { CreateBlogsForm } from './CreateBlogsForm';
+import { deleteBlog, getAllBlogs } from '../../api-client/apiModules/blogs';
 
 export const BlogsPage = () => {
-    const [blogs, setBlogs] = React.useState([{id: '1', title: 'Blog 1', author: 'Author 1', description: 'Description 1', imageUrl: null, blog: ''}, {id: '2', title: 'Blog 2', author: 'Author 2', description: 'Description 2', imageUrl: null, blog: ''}]); // [{title: 'Blog 1', author: 'Author 1', description: 'Description 1'}, {title: 'Blog 2', author: 'Author 2', description: 'Description 2'}]
+    const [blogs, setBlogs] = React.useState<any>([]); // [{title: 'Blog 1', author: 'Author 1', description: 'Description 1'}, {title: 'Blog 2', author: 'Author 2', description: 'Description 2'}]
     const [createBlogModal, setCreateBlogModal] = React.useState(false);
-    const [editBlogId, setEditBlogId] = React.useState(null);
+    const [editBlog, setEditBlog] = React.useState<any>(null);
+
+    useEffect(() => {
+        const getBlogs = async () => {
+            try {
+                const blogs = await getAllBlogs();
+                setBlogs(blogs);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        getBlogs();
+    }, [])
 
     const addNewBlog = (blog: any) => {
         const oldBlogs = [...blogs]
@@ -19,19 +32,33 @@ export const BlogsPage = () => {
         const blogIndex = oldBlogs.findIndex((blog: any) => blog.id === blogId);
         oldBlogs[blogIndex] = [...oldBlogs[blogIndex], data];
         setBlogs(oldBlogs);
+        setEditBlog(null);
+    }
+
+    const closeModal = () => {
+        setCreateBlogModal(false);
+        setEditBlog(null);
+    }
+
+    const removeBlog = async (blogId: string) => {
+        await deleteBlog(blogId);
+        const oldBlogs = [...blogs];
+        const blogIndex = oldBlogs.findIndex((blog: any) => blog.id === blogId);
+        oldBlogs.splice(blogIndex, 1);
+        setBlogs(oldBlogs);
     }
 
     return (
         <div className="bg-gray-200">
             {createBlogModal && 
                 <Modal
-                    setShowModal={setCreateBlogModal}
-                    title={editBlogId ? `Edit Blog` :`Create Blog`}
+                    setShowModal={closeModal}
+                    title={editBlog ? `Edit Blog` :`Create Blog`}
                 >
-                    <CreateBlogsForm addNewBlog={addNewBlog} setCreateBlogModal={setCreateBlogModal} editBlogId={editBlogId} updateBlogList={updateBlogsList} />
+                    <CreateBlogsForm addNewBlog={addNewBlog} setCreateBlogModal={setCreateBlogModal} editBlog={editBlog} updateBlogList={updateBlogsList} />
                 </Modal>
             }
-            <BlogsList list={blogs} setCreateBlogModal={setCreateBlogModal}/>
+            <BlogsList list={blogs} setCreateBlogModal={setCreateBlogModal} setEditBlog={setEditBlog} removeBlog={removeBlog} />
         </div>
 
     )
