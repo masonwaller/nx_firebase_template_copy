@@ -8,6 +8,7 @@ export default function Header() {
 
   const handleLogout = () => {
     setUser({ firstName: null, lastName: null, id: null, joinDate: null, email: null, userType: 'Reader' });
+    localStorage.clear();
   }
     return (
         <nav

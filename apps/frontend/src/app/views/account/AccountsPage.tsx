@@ -61,7 +61,7 @@ export const AccountPage = () => {
 
 
     return (
-        <div className="">
+        <div className="bg-gray-200">
           <div className="container mx-auto w-7/12 px-4 sm:px-6 lg:px-8">
             {!user.id ? (
                 <h2 className="text-gray-700 font-bold text-4xl">
