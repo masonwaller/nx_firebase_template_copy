@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ValidationResults, validState } from "../../shared/validation";
 
 export const yourAccountInputNames: any = {

@@ -1,8 +1,14 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { UserContext } from '../../app';
 
 
 export default function Header() {
+  const { user, setUser } = React.useContext(UserContext);
+
+  const handleLogout = () => {
+    setUser({ firstName: null, lastName: null, id: null, joinDate: null, email: null, userType: 'Reader' });
+  }
     return (
         <nav
         className="relative flex w-full items-center justify-between bg-white py-2 text-neutral-600 shadow-lg hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-600 dark:text-neutral-200 md:flex-wrap md:justify-start"
@@ -78,6 +84,7 @@ export default function Header() {
                 </NavLink>
               </li>
               <li className="mb-2 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
+              {!user.id ?
                 <NavLink
                   className="block transition duration-150 ease-in-out hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:hover:text-white dark:focus:text-white lg:p-2 [&.active]:text-black/90"
                   to='/login'
@@ -87,6 +94,18 @@ export default function Header() {
                   >
                     Login
                 </NavLink>
+                :
+                <NavLink
+                  className="block transition duration-150 ease-in-out hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:hover:text-white dark:focus:text-white lg:p-2 [&.active]:text-black/90"
+                  onClick={() => handleLogout()}
+                  to='/login'
+                  data-te-nav-link-ref
+                  data-te-ripple-init
+                  data-te-ripple-color="light"
+                  >
+                    Logout
+                </NavLink>
+              }
               </li>
             </ul>
           </div>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { yourAccountInputNames } from './validation';
 import { greyBorderClassName } from './styles';
