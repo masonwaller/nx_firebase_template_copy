@@ -85,21 +85,20 @@ export default function Header() {
                 </NavLink>
               </li>
               <li className="mb-2 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
-              {!user.id ?
-                <NavLink
-                  className="block transition duration-150 ease-in-out hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:hover:text-white dark:focus:text-white lg:p-2 [&.active]:text-black/90"
-                  to='/login'
-                  data-te-nav-link-ref
-                  data-te-ripple-init
-                  data-te-ripple-color="light"
-                  >
-                    Login
-                </NavLink>
-                :
+              {user.id &&
+                // <NavLink
+                //   className="block transition duration-150 ease-in-out hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:hover:text-white dark:focus:text-white lg:p-2 [&.active]:text-black/90"
+                //   to='/login'
+                //   data-te-nav-link-ref
+                //   data-te-ripple-init
+                //   data-te-ripple-color="light"
+                //   >
+                //     Login
+                // </NavLink>
                 <NavLink
                   className="block transition duration-150 ease-in-out hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:hover:text-white dark:focus:text-white lg:p-2 [&.active]:text-black/90"
                   onClick={() => handleLogout()}
-                  to='/login'
+                  to='/account'
                   data-te-nav-link-ref
                   data-te-ripple-init
                   data-te-ripple-color="light"

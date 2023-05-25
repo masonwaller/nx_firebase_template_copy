@@ -4,11 +4,14 @@ import { BlogsList } from './BlogsList';
 import Modal from '../../components/modal/modal';
 import { CreateBlogsForm } from './CreateBlogsForm';
 import { deleteBlog, getAllBlogs } from '../../api-client/apiModules/blogs';
+import BlogPopUp from './BlogPopUp';
 
 export const BlogsPage = () => {
     const [blogs, setBlogs] = React.useState<any>([]); // [{title: 'Blog 1', author: 'Author 1', description: 'Description 1'}, {title: 'Blog 2', author: 'Author 2', description: 'Description 2'}]
     const [createBlogModal, setCreateBlogModal] = React.useState(false);
     const [editBlog, setEditBlog] = React.useState<any>(null);
+    const [displayBlog, setDisplayBlog] = React.useState<any>(false);
+    const [selectedBlog, setSelectedBlog] = React.useState<any>(null);
 
     useEffect(() => {
         const getBlogs = async () => {
@@ -48,8 +51,19 @@ export const BlogsPage = () => {
         setBlogs(oldBlogs);
     }
 
+    const closePopUp = () => {
+        setDisplayBlog(false);
+        setSelectedBlog(null);
+    }
+
+    const onBlogClick = (blog: any) => {
+        setDisplayBlog(true);
+        setSelectedBlog(blog);
+    }
+
     return (
         <div className="bg-gray-200">
+            {displayBlog && <BlogPopUp blog={selectedBlog} closePopUp={closePopUp} />}
             {createBlogModal && 
                 <Modal
                     setShowModal={closeModal}
@@ -58,7 +72,7 @@ export const BlogsPage = () => {
                     <CreateBlogsForm addNewBlog={addNewBlog} setCreateBlogModal={setCreateBlogModal} editBlog={editBlog} updateBlogList={updateBlogsList} />
                 </Modal>
             }
-            <BlogsList list={blogs} setCreateBlogModal={setCreateBlogModal} setEditBlog={setEditBlog} removeBlog={removeBlog} />
+            <BlogsList list={blogs} setCreateBlogModal={setCreateBlogModal} setEditBlog={setEditBlog} removeBlog={removeBlog} onBlogClick={onBlogClick} />
         </div>
 
     )
