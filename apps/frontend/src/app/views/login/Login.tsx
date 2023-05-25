@@ -34,8 +34,10 @@ export const Login = () => {
         [ signIn ]
     );
     return (
-        <div>
-            <h2>React Google Login</h2>
+        <div className='mt-5'>
+            <h1 className="text-3xl">React Google Login</h1>
+            <br />
+            <p>Being signed in gives you access to create and save blogs onto our site.</p>
             <br />
             <br />
             {user.email ? (
@@ -44,12 +46,10 @@ export const Login = () => {
                     <h3>User Logged in</h3>
                     <p>Name: {user.name}</p>
                     <p>Email Address: {user.email}</p>
-                    <br />
-                    <br />
-                    {/* <button onClick={logOut}>Log out</button> */}
+
                 </div>
             ) : (
-                <button onClick={() => login()}>Sign in with Google </button>
+                <button onClick={() => login()} className='border-2 rounded-md bg-blue-500 text-white p-5'>Sign in with Google </button>
             )}
         </div>
     );

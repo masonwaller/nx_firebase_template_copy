@@ -1,0 +1,41 @@
+.mytabs {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .mytabs label {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-right: 15px;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    margin-right: 5px;
+    font-weight: 300;
+  }
+  
+  .mytabs .tab {
+    padding: 0.5rem;
+    & :hover {
+      cursor: pointer;
+    }
+  }
+  
+  .mytabs .tabBody {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    order: 1;
+    border-top: 1px solid #e5e7eb;
+    padding-left: 6rem;
+    padding-right: 6rem;
+  }
+  
+  .mytabs .tabBody .h2 {
+    font-size: 3rem;
+  }
+  
+  .selectedAppTab {
+    color: rgba(99, 102, 241, 1);
+    border-bottom: 4px solid rgba(99, 102, 241, 1);
+  }
+  

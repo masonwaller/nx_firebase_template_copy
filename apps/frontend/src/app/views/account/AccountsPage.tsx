@@ -5,6 +5,7 @@ import { FormSaveButton } from '../../components/formSaveButton/FormSaveButton';
 import { isFormValid } from '../../shared/validation';
 import { initYourAccountValidationState } from './validation';
 import { updateUserData } from '../../api-client/apiModules/users';
+import { Login } from '../login/Login';
 
 export const AccountPage = () => {
     const {user, setUser} = React.useContext(UserContext);
@@ -64,9 +65,7 @@ export const AccountPage = () => {
         <div className="bg-gray-200">
           <div className="container mx-auto w-7/12 px-4 sm:px-6 lg:px-8">
             {!user.id ? (
-                <h2 className="text-gray-700 font-bold text-4xl">
-                    Login to see your account
-                </h2>
+                <Login />
             ) : (
             <>
               <h2 className="text-gray-700 font-bold text-4xl">

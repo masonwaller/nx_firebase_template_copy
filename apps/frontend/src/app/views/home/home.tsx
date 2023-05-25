@@ -1,11 +1,14 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import React from 'react';
 import { UserContext } from '../../app';
+import { UnsignedInHome } from './UnsignedInHome';
+import { SignedInHome } from './SignedInHome';
 
 export const Home = () => {
     const {user, setUser} = React.useContext(UserContext);
     return (
-        <div className='bg-gray-200'>
-        <h1>Home</h1>
-        </div>
+        <>
+        {!user.id ? <UnsignedInHome /> : <SignedInHome />}
+        </>
     )
 }
