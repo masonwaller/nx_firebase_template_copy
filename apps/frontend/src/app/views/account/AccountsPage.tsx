@@ -14,6 +14,7 @@ export const AccountPage = () => {
         firstName: '',
         lastName: '',
         userType: '',
+        id: '',
     });
     const [submittingForm, setSubmittingForm] = useState(false);
     
@@ -26,6 +27,7 @@ export const AccountPage = () => {
                 firstName: user.firstName || '',
                 lastName: user.lastName || '',
                 userType: user.userType|| '',
+                id: user.id || '',
             });
         }
     }, [user]);
@@ -46,12 +48,9 @@ export const AccountPage = () => {
         setValidation(initYourAccountValidationState());
 
         try {
-            const response = await updateUserData(formData);
-            if (!response.success) {
-                alert('There was an error updating your account.');
-            } else {
-                alert('Your account has been updated.');
-            }
+            await updateUserData(formData);
+            const newUser = {...user, ...formData}
+            setUser(newUser)
         } catch (e) {
           console.error('Error submitting form', e);
           alert('There was an error.');

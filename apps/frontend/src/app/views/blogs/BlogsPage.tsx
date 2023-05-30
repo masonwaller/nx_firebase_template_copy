@@ -33,7 +33,8 @@ export const BlogsPage = () => {
     const updateBlogsList = (blogId: string, data: any) => {
         const oldBlogs: any = [...blogs];
         const blogIndex = oldBlogs.findIndex((blog: any) => blog.id === blogId);
-        oldBlogs[blogIndex] = [...oldBlogs[blogIndex], data];
+        console.log(blogIndex, 'bi')
+        oldBlogs[blogIndex] = {...oldBlogs[blogIndex], data};
         setBlogs(oldBlogs);
         setEditBlog(null);
     }

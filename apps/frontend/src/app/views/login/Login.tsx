@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { UserContext } from '../../app';
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
+import { createUserData } from '../../api-client/apiModules/users';
 
 export const Login = () => {
     const [ signIn, setSignIn ] = React.useState<any>([]);
@@ -16,20 +17,24 @@ export const Login = () => {
 
     useEffect(
         () => {
-            if (signIn) {
-                axios
-                    .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${signIn.access_token}`, {
-                        headers: {
-                            Authorization: `Bearer ${signIn.access_token}`,
-                            Accept: 'application/json'
-                        }
-                    })
-                    .then((res) => {
-                        setUser(res.data);
-                        localStorage.setItem('user', JSON.stringify(res.data));
-                    })
-                    .catch((err) => console.log(err));
+            const signInUser = async () => {
+                if (signIn) {
+                    axios
+                        .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${signIn.access_token}`, {
+                            headers: {
+                                Authorization: `Bearer ${signIn.access_token}`,
+                                Accept: 'application/json'
+                            }
+                        })
+                        .then(async (res) => {
+                            const userData = await createUserData({name: res.data.name, email: res.data.email, picture: res.data.picture});
+                            setUser(userData);
+                            localStorage.setItem('user', JSON.stringify(userData));
+                        })
+                        .catch((err) => console.log(err));
+                }
             }
+            signInUser();
         },
         [ signIn ]
     );
