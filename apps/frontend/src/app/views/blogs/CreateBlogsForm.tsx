@@ -31,22 +31,23 @@ export const CreateBlogsForm = (props: CreateBlogProps) => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    console.log(props.editBlog)
     try{
         const blogData = {
             title,
             description,
             blog,
             imageUrl,
-            author: user.id
+            author: user.name,
+            authorId: user.id,
         }
-        if(props.editBlog.id){
+        if(props.editBlog?.id){
             await updateBlog(props.editBlog.id, blogData);
             props.updateBlogList(props.editBlog.id, blogData)
         } else {
             const res = await createBlog(blogData);
-            //have to get the new blog ID from the response once backend is set up
-            props.addNewBlog(blogData);
+            const newBlog = {...blogData, id: res.id, date: res.date}
+            props.addNewBlog(newBlog);
         }
 
     } catch(e){

@@ -20,10 +20,17 @@ if (functions.config().project && functions.config().project.id) {
 
 console.log(`Initializing Firebase Admin ${settings.project_id}`);
 
-initializeApp({
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const serviceAccount = process.env.FIREBASE_ADMINSDK_KEY;
+const baseAppConfig = {
   projectId: settings.project_id,
   databaseURL: `https://${settings.project_id}.firebaseio.com`,
-});
+}
+if(serviceAccount) {
+  baseAppConfig['credential'] = admin.credential.cert(JSON.parse(serviceAccount));
+}
+
+initializeApp(baseAppConfig);
 
 export const db = getFirestore();
 export const realtime = getDatabase();
@@ -85,7 +92,7 @@ export async function getCollectionData(
     query = query[paginationValue](params.options[paginationValue]);
   }
   const documents = [];
-  console.log('query', query)
+  // console.log('query', query)
   const data = await query.get();
   for (let i = 0; i < data.docs.length; i++) {
     documents.push({

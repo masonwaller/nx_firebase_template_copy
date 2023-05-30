@@ -8,7 +8,7 @@ interface Props {
 }
 
 const BlogPopUp: React.FC<Props> = (props) => {
-
+console.log(props.blog)
 
   return (
     <div className="flex justify-center fixed inset-0 z-50 outline-none focus:outline-none">
@@ -43,7 +43,7 @@ const BlogPopUp: React.FC<Props> = (props) => {
           </div>
           <div>
             <span className="text-sm">
-              {`Written on ${props.blog.date}`}
+              {`Written on ${props.blog.date?.toString()}`}
             </span>
           </div>
         </div>
