@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@nestjs/common';
-import { createData, deleteData, getCollectionData, updateData } from '@nx-template/firebase'
+import { createData, deleteData, getCollectionData, getDataById, updateData } from '@nx-template/firebase'
 
 @Injectable()
 export class BlogsService {
@@ -13,6 +13,13 @@ export class BlogsService {
         limit: 20
       }
     })
+  }
+
+  getBlog(id): Promise<any> {
+      return getDataById({
+          collection: 'blogs',
+          docId: id
+      })
   }
 
   async createBlog(body): Promise<any> {
