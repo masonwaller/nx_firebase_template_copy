@@ -10,6 +10,11 @@ export class BlogsController {
         return this.blogsService.getBlogs();
     }
 
+    @Get('blog/:id')
+    getBlog(@Param('id') id: any) {
+        return this.blogsService.getBlog(id);
+    }
+
     @Post()
     createBlog(@Body() body: any) {
         return this.blogsService.createBlog(body);

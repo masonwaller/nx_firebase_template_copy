@@ -7,6 +7,11 @@ export const getAllBlogs = async () => {
     return blogData.data;
     }
 
+export const getBlog = async (id: any) => {
+    const blogData = await axios.get(`http://localhost:3000/api/blogs/blog/${id}`);
+    return blogData.data;
+    }
+
 export const createBlog = async (data: any) => {
     const blogData = await axios.post('http://localhost:3000/api/blogs', data);
     return blogData.data;
