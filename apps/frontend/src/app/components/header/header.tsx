@@ -1,15 +1,57 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { UserContext } from '../../app';
+import { Logo } from './Logo';
+import { Transition } from '@headlessui/react';
 
 
 export default function Header() {
   const { user, setUser } = React.useContext(UserContext);
 
+  const container: any = useRef(null);
+  const mobileContainer: any = useRef(null);
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [currentHeader, setCurrentHeader] = useState('');
+
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+
+  const defaultUserPhotoURL =
+  'https://www.gravatar.com/avatar/00000000000000000000000000000000';
+  const userPhotoURL = user.picture || defaultUserPhotoURL;
+
+  useEffect(() => {
+    const currentUrl = window.location.pathname.split('/')[1];
+    console.log(currentUrl);
+    setCurrentHeader(currentUrl);
+  }, []);
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (!container?.current?.contains(event.target)) {
+        if (!showUserMenu) return;
+        setShowUserMenu(false);
+      }
+    };
+
+    window.addEventListener('click', handleOutsideClick);
+    return () => window.removeEventListener('click', handleOutsideClick);
+  }, [showUserMenu, container]);
+
   const handleLogout = () => {
     setUser({ firstName: null, lastName: null, id: null, joinDate: null, email: null, userType: 'Reader' });
     localStorage.clear();
   }
+
+  const onMenuItemClick = (path: any) => {
+    setShowUserMenu(false);
+    setShowMobileMenu(false);
+    setCurrentHeader(path);
+  };
+
+  function classNames(...classes: any[]) {
+    return classes.filter(Boolean).join(' ');
+  }
+
     return (
         <nav
         className="relative flex w-full items-center justify-between bg-white py-2 text-neutral-600 shadow-lg hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-600 dark:text-neutral-200 md:flex-wrap md:justify-start"
@@ -18,7 +60,8 @@ export default function Header() {
           <div className="flex items-center">
             
             <button
-              className="border-0 bg-transparent px-2 text-xl leading-none transition-shadow duration-150 ease-in-out hover:text-neutral-700 focus:text-neutral-700 dark:hover:text-white dark:focus:text-white lg:hidden"
+              onClick={() => setShowMobileMenu(!showMobileMenu)}
+              className="border-0 bg-transparent px-2 text-xl leading-none transition-shadow duration-150 ease-in-out lg:hidden"
               type="button"
               data-te-collapse-init
               data-te-target="#navbarSupportedContentY"
@@ -42,10 +85,12 @@ export default function Header() {
               </span>
             </button>
           </div>
+          
     
+          <Logo className="h-10 w-auto" />
           
           <div
-            className="!visible hidden grow basis-[100%] items-center lg:!flex lg:basis-auto"
+            className="!visible hidden grow basis-[100%] items-center lg:!flex lg:basis-auto ml-7"
             id="navbarSupportedContentY"
             data-te-collapse-item>
             <ul
@@ -53,63 +98,122 @@ export default function Header() {
               data-te-navbar-nav-ref>
               <li className="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
                 <NavLink
-                  className="block transition duration-150 ease-in-out hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:hover:text-white dark:focus:text-white lg:p-2 [&.active]:text-black/90"
+                  className={`block transition duration-150 ease-in-out lg:p-2 ${currentHeader === 'home' ? 'text-white bg-black rounded' : ''}`}
                   to='/home'
                   data-te-nav-link-ref
                   data-te-ripple-init
                   data-te-ripple-color="light"
+                  onClick={() => onMenuItemClick('home')}
                   >
                     Home
                 </NavLink>
               </li>
               <li className="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
                 <NavLink
-                  className="block transition duration-150 ease-in-out hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:hover:text-white dark:focus:text-white lg:p-2 [&.active]:text-black/90"
+                  className={`block transition duration-150 ease-in-out lg:p-2 ${currentHeader === 'blogs' ? 'text-white bg-black rounded' : ''}`}
                   to='/blogs'
                   data-te-nav-link-ref
                   data-te-ripple-init
                   data-te-ripple-color="light"
+                  onClick={() => onMenuItemClick('blogs')}
                   >
                     Blogs
                 </NavLink>
               </li>
-              <li className="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
-                <NavLink
-                  className="block transition duration-150 ease-in-out hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:hover:text-white dark:focus:text-white lg:p-2 [&.active]:text-black/90"
-                  to='/account'
-                  data-te-nav-link-ref
-                  data-te-ripple-init
-                  data-te-ripple-color="light"
-                  >
-                    Account
-                </NavLink>
-              </li>
-              <li className="mb-2 lg:mb-0 lg:pr-2" data-te-nav-item-ref>
-              {user.id &&
-                // <NavLink
-                //   className="block transition duration-150 ease-in-out hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:hover:text-white dark:focus:text-white lg:p-2 [&.active]:text-black/90"
-                //   to='/login'
-                //   data-te-nav-link-ref
-                //   data-te-ripple-init
-                //   data-te-ripple-color="light"
-                //   >
-                //     Login
-                // </NavLink>
-                <NavLink
-                  className="block transition duration-150 ease-in-out hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:hover:text-white dark:focus:text-white lg:p-2 [&.active]:text-black/90"
-                  onClick={() => handleLogout()}
-                  to='/account'
-                  data-te-nav-link-ref
-                  data-te-ripple-init
-                  data-te-ripple-color="light"
-                  >
-                    Logout
-                </NavLink>
-              }
-              </li>
             </ul>
           </div>
+          <div className="relative flex-shrink-0 z-50" ref={container}>
+                <div>
+                  <button
+                    onClick={() => setShowUserMenu(!showUserMenu)}
+                    className="bg-white rounded-full flex shadow-none focus:ring-2"
+                    id="user-menu"
+                    aria-haspopup="true"
+                  >
+                    <span className="sr-only">Open User Menu</span>
+                    <img
+                      className="h-8 w-8 rounded-full"
+                      src={userPhotoURL}
+                      referrerPolicy="no-referrer"
+                      alt=""
+                    ></img>
+                  </button>
+                </div>
+                <Transition
+                  show={showUserMenu}
+                  enter="transition ease-out duration-100 transform"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="transition ease-in duration-75 transform"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <div
+                    className="origin-top-right absolute right-0 mt-2 w-60 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="user-menu"
+                  >
+
+                    <NavLink
+                      onClick={() => onMenuItemClick('account')}
+                      to='/account'
+                      className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${currentHeader === 'account' ? 'bg-gray-100' : ''}`}
+                    >
+                      {user.id ? 'Your Account' : 'Sign In'}
+                    </NavLink>
+                    {user.id && (
+                      <NavLink
+                        onClick={handleLogout}
+                        to="/account"
+                        className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100`}
+                        role="menuitem"
+                      >
+                        Sign out
+                      </NavLink>
+                    )}
+                  </div>
+                </Transition>
+              </div>
         </div>
+        {showMobileMenu && (
+            <div className="lg:hidden w-full" id="mobile-menu">
+              <div className="pt-2 pb-3 space-y-1 w-full">
+                    <NavLink
+                      to={'/home'}
+                      onClick={() => onMenuItemClick('home')}
+                      className={classNames(
+                        'home' === currentHeader
+                          ? `bg-gray-200`
+                          : `border-transparent`,
+                        'block pl-3 pr-4 py-2 border-l-4 text-base font-medium'
+                      )}
+                      aria-current={
+                        'home' === currentHeader ? 'page' : undefined
+                      }
+                      role="menuitem"
+                    >
+                      Home
+                    </NavLink>
+                    <NavLink
+                      to={'/blogs'}
+                      onClick={() => onMenuItemClick('blogs')}
+                      className={classNames(
+                        'blogs' === currentHeader
+                          ? `bg-gray-200`
+                          : `border-transparent`,
+                        'block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full'
+                      )}
+                      aria-current={
+                        'blogs' === currentHeader ? 'page' : undefined
+                      }
+                      role="menuitem"
+                    >
+                      Blogs
+                    </NavLink>
+              </div>
+            </div>
+            )}
       </nav>
     )
     }

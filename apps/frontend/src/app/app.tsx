@@ -26,7 +26,7 @@ export function App() {
   return (
     <UserContext.Provider value={{user, setUser}}>
     <BrowserRouter>
-      <div className="flex flex-col h-screen bg-gray-200">
+      <div className="flex flex-col h-screen">
         <div style={{ flex: '1 1 0' }}>
           <Header></Header>
           <Router></Router>

@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from 'react';
-import { BlogsList } from './BlogsList';
+// import { BlogsList } from './BlogsList';
 import Modal from '../../components/modal/modal';
 import { CreateBlogsForm } from './CreateBlogsForm';
 import { deleteBlog, getAllBlogs } from '../../api-client/apiModules/blogs';
+import BlogsList from './BlogsList';
 
 export const BlogsPage = () => {
     const [blogs, setBlogs] = React.useState<any>([]); // [{title: 'Blog 1', author: 'Author 1', description: 'Description 1'}, {title: 'Blog 2', author: 'Author 2', description: 'Description 2'}]
@@ -50,7 +51,7 @@ export const BlogsPage = () => {
     }
 
     return (
-        <div className="bg-gray-200">
+        <div className="mb-10">
             {createBlogModal && 
                 <Modal
                     setShowModal={closeModal}
