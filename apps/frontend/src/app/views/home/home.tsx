@@ -2,7 +2,7 @@
 import React from 'react';
 import { UserContext } from '../../app';
 import { UnsignedInHome } from './UnsignedInHome';
-import { SignedInHome } from './SignedInHome';
+import SignedInHome from './SignedInHome';
 
 export const Home = () => {
     const {user, setUser} = React.useContext(UserContext);

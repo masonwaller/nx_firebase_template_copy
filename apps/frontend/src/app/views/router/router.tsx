@@ -4,7 +4,7 @@ import { AccountPage } from '../account/AccountsPage';
 import { BlogsPage } from '../blogs/BlogsPage';
 import { Home } from '../home/home';
 import {Login} from '../login/Login';
-import Blog from '../blogs/Blog';
+import IndividualBlogPage from '../blogs/IndividualBlogPage';
 
 export default function Router() {
   
@@ -13,7 +13,7 @@ export default function Router() {
         <Route path="/login" element={<Login />} />
         <Route path='/home' element={<Home />} />
         <Route path='/blogs' element={<BlogsPage/>} />
-        <Route path='/blogs/blog/:id' element={<Blog />} />
+        <Route path='/blogs/blog/:id' element={<IndividualBlogPage />} />
         <Route path='/account' element={<AccountPage/>} />
       </Routes>
     );

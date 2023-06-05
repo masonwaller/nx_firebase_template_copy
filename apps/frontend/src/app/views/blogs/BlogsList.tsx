@@ -1,58 +1,80 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
-import { UserContext } from '../../app';
-import { NavLink } from 'react-router-dom';
+import { useContext } from "react"
+import { Card } from "../../components/blog-pages/Card"
+import { SimpleLayout } from "../../components/blog-pages/SimpleLayout"
+import { UserContext } from "../../app"
 
-interface BlogsListProps {
-    list: any[];
-    setCreateBlogModal: (value: boolean) => void;
-    setEditBlog: (value: any) => void;
-    removeBlog: (blogId: string) => void;
+function Blog({ blog, setEditBlog, removeBlog, setCreateBlogModal }: any) {
+  const {user, setUser} = useContext(UserContext)
+
+  const editBlog = (blog: any) => {
+    setEditBlog(blog);
+    setCreateBlogModal(true);
 }
-
-export const BlogsList = (props: BlogsListProps) => {
-
-    const {user, setUser} = React.useContext(UserContext);
-
-    const editBlog = (blog: any) => {
-        props.setEditBlog(blog);
-        props.setCreateBlogModal(true);
-    }
-
-    return (
-        <section className="text-gray-600 body-font">
-            <div className="container px-5 py-24 mx-auto max-w-7x1">
-                <div className="flex flex-wrap w-full mb-4 p-4">
-                    <div className="w-full mb-6 lg:mb-0 flex flex-col">
-                        <h1 className="sm:text-4xl text-5xl font-medium font-bold title-font mb-2 text-gray-900">Recent Blogs</h1>
-                        <div className="h-1 w-20 bg-indigo-500 rounded"></div>
-                        <button onClick={() => props.setCreateBlogModal(true)} className="w-1/10 self-end p-3 bg-blue-400 rounded-md">Create Blog</button>
-                    </div>
-                </div>
-                <div className="flex flex-wrap -m-4">
-                    {props.list.map((blog) => {
-                        return (
-                            <div className="xl:w-1/3 md:w-1/2 p-4">
-                                <div className="bg-white p-6 rounded-lg flex flex-col">
-                                    <NavLink to={`/blogs/blog/${blog.id}`}>
-                                        <img className="lg:h-60 xl:h-56 md:h-64 sm:h-72 xs:h-72 h-72 rounded w-full object-cover object-center mb-6" src={blog.imageUrl || "https://asset.kompas.com/crops/Pk_pN6vllxXy1RshYsEv74Q1BYA=/56x0:1553x998/750x500/data/photo/2021/06/16/60c8f9d68ff4a.jpg"} alt="Replacement"/>
-                                        <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">{blog.author}</h3>
-                                        <h2 className="text-lg text-gray-900 font-medium title-font mb-4">{blog.title}</h2>
-                                        <p className="leading-relaxed text-base">{blog.description}</p>
-                                    </NavLink>
-                                    {
-                                        blog.authorId === user.id && 
-                                        <div className='self-end'>
-                                            <button className='p-1 bg-yellow-400 rounded-md mr-1' onClick={() => editBlog(blog)}>Edit</button>
-                                            <button className='p-1 bg-red-400 rounded-md' onClick={() => props.removeBlog(blog.id)}>Delete</button>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                        )
-                    })}
-                </div>
+  
+  return (
+    <>
+    <article className="md:grid md:grid-cols-4 md:items-baseline">
+      <Card className="md:col-span-3">
+        <Card.Title href={`/blogs/blog/${blog.id}`}>
+          {blog.title}
+        </Card.Title>
+        <Card.Eyebrow
+          as="time"
+          dateTime={blog.date}
+          className="md:hidden"
+          decorate
+        >
+          {blog.date}
+        </Card.Eyebrow>
+        <Card.Description>{blog.description}</Card.Description>
+        <Card.Cta>Read blog</Card.Cta>
+      </Card>
+      <Card.Eyebrow
+        as="time"
+        dateTime={blog.date}
+        className="mt-1 hidden md:block"
+      >
+        {blog.date}
+      </Card.Eyebrow>
+      {
+          blog.authorId === user.id && 
+            <div className='self-end'>
+              <button className='p-1 bg-yellow-400 rounded-md mr-1' onClick={() => editBlog(blog)}>Edit</button>
+              <button className='p-1 bg-red-400 rounded-md' onClick={() => removeBlog(blog.id)}>Delete</button>
             </div>
-        </section>
-    )
+        }
+    </article>
+    <hr className="my-6 h-0.5 w-full border-t-0 bg-gray-100 opacity-100 dark:opacity-50" />
+    </>
+  )
 }
+
+export default function BlogsList({ list, setCreateBlogModal, setEditBlog, removeBlog }: any) {
+  return (
+      <SimpleLayout
+        title="Blogs are a great way to share your thoughts and opinions with the world."
+        intro="Check out are assortment of blogs.  We have a wide variety of topics to choose from.  If you would like to contribute to our site, create a blog."
+      >
+            <div className="flex justify-end">
+                <button onClick={() => setCreateBlogModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Create Blog
+                </button>
+            </div>
+        <div className="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40">
+          <div className="flex max-w-3xl flex-col space-y-16">
+            {list.map((blog: any) => (
+              <Blog key={blog.id} blog={blog} setEditBlog={setEditBlog} removeBlog={removeBlog} setCreateBlogModal={setCreateBlogModal} />
+            ))}
+          </div>
+        </div>
+      </SimpleLayout>
+  )
+}
+
+// export async function getStaticProps() {
+//   return {
+//     props: {
+//       articles: (await getAllArticles()).map(({ component, ...meta }) => meta),
+//     },
+//   }
+// }
