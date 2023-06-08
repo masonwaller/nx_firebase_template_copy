@@ -29,6 +29,8 @@ export class UsersService {
         const nameArr = body['name'].split(' ')
         body['firstName'] = nameArr[0]
         body['lastName'] = nameArr[1]
+        body['roles'] = []
+        body['active'] = true
 
         const userIdObj = await createData({
             collection: 'users',
@@ -51,6 +53,45 @@ export class UsersService {
             params: body
         })
         return body
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+  }
+
+  async getUsersFromSearch(search): Promise<any> {
+    try {
+        if(search === '') {
+          const users = await getCollectionData({
+              collection: 'users'
+          })
+          return users
+        }
+        const nameMatches = await getCollectionData({
+            collection: 'users',
+            options: {
+              name: search
+            }
+        })
+
+        const firstNameMatches = await getCollectionData({
+            collection: 'users',
+            options: {
+              firstName: search
+            }
+        })
+
+        const lastNameMatches = await getCollectionData({
+            collection: 'users',
+            options: {
+              lastName: search
+            }
+        })
+
+        const duplicateMatches = [...nameMatches, ...firstNameMatches, ...lastNameMatches]
+        const uniqueMatches = duplicateMatches.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i)
+
+        return uniqueMatches
     } catch (error) {
         console.log(error)
         return error
