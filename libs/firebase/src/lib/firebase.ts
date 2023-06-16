@@ -25,6 +25,7 @@ const serviceAccount = process.env.FIREBASE_ADMINSDK_KEY;
 const baseAppConfig = {
   projectId: settings.project_id,
   databaseURL: `https://${settings.project_id}.firebaseio.com`,
+  storageBucket: `${settings.project_id}.appspot.com`,
 }
 if(serviceAccount) {
   baseAppConfig['credential'] = admin.credential.cert(JSON.parse(serviceAccount));
