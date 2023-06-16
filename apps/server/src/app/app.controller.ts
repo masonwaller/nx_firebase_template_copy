@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 
 import { AppService } from './app.service';
+import { sendDynamicEmail } from '../integrations/sendgrid';
 
 @Controller()
 export class AppController {
