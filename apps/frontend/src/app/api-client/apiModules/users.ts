@@ -37,6 +37,7 @@ export const uploadStorageDocument = async (path: string, file: any) => {
     await getDownloadURL(fileRef).then((url) => {
         const aTag = document.createElement('a');
         aTag.href = url;
+        aTag.target = '_blank';
         aTag.setAttribute('download', fileName);
         document.body.appendChild(aTag);
         aTag.click();
