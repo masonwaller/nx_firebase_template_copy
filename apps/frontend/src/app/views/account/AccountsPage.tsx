@@ -105,7 +105,7 @@ export const AccountPage = () => {
                 <ul>
                 {
                   uploadedFiles.map((file: any) => (
-                    <li key={file} className='underline text-teal-500' onClick={() => downloadStorageDocument(`${user.id}/${file}`)}>
+                    <li key={file} className='underline text-teal-500' onClick={() => downloadStorageDocument(`${user.id}/${file}`, file)}>
                       <p>{file}</p>
                     </li>
                   ))

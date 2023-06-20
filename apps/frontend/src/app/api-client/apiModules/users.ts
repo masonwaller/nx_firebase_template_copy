@@ -30,24 +30,17 @@ export const uploadStorageDocument = async (path: string, file: any) => {
     return true;
   }
   
-  export const downloadStorageDocument = async (path: string) => {
+  export const downloadStorageDocument = async (path: string, fileName: string) => {
     //for this to work must use gsutil and set the cors
-    alert('for this to work must use gsutil and set the cors')
-    return null;
     const fileRef = ref(storage, path);
   
-    getDownloadURL(fileRef)
-    .then((url) => {
-      // `url` is the download URL for 'images/stars.jpg'
-  
-      // This can be downloaded directly:
-      const xhr = new XMLHttpRequest();
-      xhr.responseType = 'blob';
-      xhr.onload = (event) => {
-        const blob = xhr.response;
-      };
-      xhr.open('GET', url);
-      xhr.send();
+    await getDownloadURL(fileRef).then((url) => {
+        const aTag = document.createElement('a');
+        aTag.href = url;
+        aTag.setAttribute('download', fileName);
+        document.body.appendChild(aTag);
+        aTag.click();
+        aTag.remove();
     })
     .catch((error) => {
       // Handle any errors
