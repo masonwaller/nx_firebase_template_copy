@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@nestjs/common';
-import { createData, getCollectionData, getDataByField, updateData } from '@nx-template/firebase'
+import { createData, getCollectionData, getDataByField, getRealtimeDatabase, updateData, updateRealtimeDatabase } from '@nx-template/firebase'
 
 @Injectable()
 export class UsersService {
@@ -92,6 +92,26 @@ export class UsersService {
         const uniqueMatches = duplicateMatches.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i)
 
         return uniqueMatches
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+  }
+
+  async getUsersInRealtimeDatabaseExample(): Promise<any> {
+    try {
+        const users = await getRealtimeDatabase({path: 'users'})
+        return users
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+  }
+
+  async postUserInRealtimeDatabaseExample(body): Promise<any> {
+    try {
+        const users = await updateRealtimeDatabase({path: `users/${body.id}`, updates: body})
+        return users
     } catch (error) {
         console.log(error)
         return error

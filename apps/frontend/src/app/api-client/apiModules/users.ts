@@ -17,3 +17,16 @@ export const getUsersFromSearch = async (search: string) => {
     const userData = await apiClientWithAuth.get(apiEndpoints.users + `/search`, {params: {search}})
     return userData.data
 }
+
+export const getUsersFromRealtimeDatabase = async () => {
+    const userData = await apiClientWithAuth.get(apiEndpoints.users + `/realtime-database-example`)
+    console.log(userData.data)
+    return userData.data
+}
+// getUsersFromRealtimeDatabase()
+
+export const postUsersToRealtimeDatabase = async (data: any) => {
+    const userData = await apiClientWithAuth.post(apiEndpoints.users + `/realtime-database-example`, data)
+    return userData.data
+}
+// postUsersToRealtimeDatabase({name: 'test', age: 20, random: 'test', id: 'wack'})

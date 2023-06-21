@@ -24,8 +24,9 @@ console.log(`Initializing Firebase Admin ${settings.project_id}`);
 const serviceAccount = process.env.FIREBASE_ADMINSDK_KEY;
 const baseAppConfig = {
   projectId: settings.project_id,
-  databaseURL: `https://${settings.project_id}.firebaseio.com`,
+  databaseURL: `https://${settings.project_id}-default-rtdb.firebaseio.com`,
 }
+
 if(serviceAccount) {
   baseAppConfig['credential'] = admin.credential.cert(JSON.parse(serviceAccount));
 }
@@ -615,6 +616,33 @@ export const getAll = async ({
   const users = await db.getAll(...refs);
   const results = users.map((doc) => doc.data());
   return results;
+};
+
+
+interface GetRealtimeDatabaseParams {
+  path: string;
+}
+
+export const getRealtimeDatabase = async ({
+  path,
+}: GetRealtimeDatabaseParams): Promise<any> => {
+  const ref = realtime.ref(path);
+  const snapshot = await ref.once('value');
+  return snapshot.val();
+};
+
+interface UpdateRealtimeDatabaseParams {
+  path: string;
+  updates: any;
+}
+
+export const updateRealtimeDatabase = async ({
+  path,
+  updates,
+}: UpdateRealtimeDatabaseParams): Promise<any> => {
+  const ref = realtime.ref(path);
+  await ref.update(updates);
+  return;
 };
 
 export { admin };

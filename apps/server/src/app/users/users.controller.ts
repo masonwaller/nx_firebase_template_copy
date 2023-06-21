@@ -24,4 +24,14 @@ export class UsersController {
     getUsersFromSearch(@Query('search') search: any) {
         return this.usersService.getUsersFromSearch(search);
     }
+
+    @Get('realtime-database-example')
+    getRealtimeDatabaseExample() {
+        return this.usersService.getUsersInRealtimeDatabaseExample();
+    }
+
+    @Post('realtime-database-example')
+    postRealtimeDatabaseExample(@Body() body: any) {
+        return this.usersService.postUserInRealtimeDatabaseExample(body);
+    }
 }
