@@ -25,6 +25,7 @@ const serviceAccount = process.env.FIREBASE_ADMINSDK_KEY;
 const baseAppConfig = {
   projectId: settings.project_id,
   databaseURL: `https://${settings.project_id}-default-rtdb.firebaseio.com`,
+  storageBucket: `${settings.project_id}.appspot.com`,
 }
 
 if(serviceAccount) {
