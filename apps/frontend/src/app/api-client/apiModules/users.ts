@@ -20,6 +20,19 @@ export const getUsersFromSearch = async (search: string) => {
     return userData.data
 }
 
+export const getUsersFromRealtimeDatabase = async () => {
+    const userData = await apiClientWithAuth.get(apiEndpoints.users + `/realtime-database-example`)
+    console.log(userData.data)
+    return userData.data
+}
+// getUsersFromRealtimeDatabase()
+
+export const postUsersToRealtimeDatabase = async (data: any) => {
+    const userData = await apiClientWithAuth.post(apiEndpoints.users + `/realtime-database-example`, data)
+    return userData.data
+}
+// postUsersToRealtimeDatabase({name: 'test', age: 20, random: 'test', id: 'wack'})
+
 export const uploadStorageDocument = async (path: string, file: any) => {
     const fileRef = ref(storage, `${path}/${file.name}`);
   
