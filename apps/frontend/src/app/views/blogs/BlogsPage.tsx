@@ -1,21 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from 'react';
-// import { BlogsList } from './BlogsList';
 import Modal from '../../components/modal/modal';
 import { CreateBlogsForm } from './CreateBlogsForm';
 import { deleteBlog, getAllBlogs } from '../../api-client/apiModules/blogs';
 import BlogsList from './BlogsList';
+import { allFilesForUser } from '../../api-client/apiModules/users';
 
 export const BlogsPage = () => {
     const [blogs, setBlogs] = React.useState<any>([]); // [{title: 'Blog 1', author: 'Author 1', description: 'Description 1'}, {title: 'Blog 2', author: 'Author 2', description: 'Description 2'}]
     const [createBlogModal, setCreateBlogModal] = React.useState(false);
     const [editBlog, setEditBlog] = React.useState<any>(null);
 
+    const [downloadableBlogs, setDownloadableBlogs] = React.useState<any>([]);
+
     useEffect(() => {
         const getBlogs = async () => {
             try {
                 const blogs = await getAllBlogs();
                 setBlogs(blogs);
+                const blogsToDownload = await allFilesForUser('blogs');
+                setDownloadableBlogs(blogsToDownload);
             } catch (e) {
                 console.log(e);
             }
@@ -60,7 +64,7 @@ export const BlogsPage = () => {
                     <CreateBlogsForm addNewBlog={addNewBlog} setCreateBlogModal={setCreateBlogModal} editBlog={editBlog} updateBlogList={updateBlogsList} />
                 </Modal>
             }
-            <BlogsList list={blogs} setCreateBlogModal={setCreateBlogModal} setEditBlog={setEditBlog} removeBlog={removeBlog} />
+            <BlogsList list={blogs} setCreateBlogModal={setCreateBlogModal} setEditBlog={setEditBlog} removeBlog={removeBlog} downloadableBlogs={downloadableBlogs}/>
         </div>
 
     )

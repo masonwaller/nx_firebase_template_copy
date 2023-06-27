@@ -2,6 +2,9 @@ import { useContext } from "react"
 import { Card } from "../../components/blog-pages/Card"
 import { SimpleLayout } from "../../components/blog-pages/SimpleLayout"
 import { UserContext } from "../../app"
+import './blogs.css'
+import React from "react"
+import { downloadStorageDocument, uploadStorageDocument } from "../../api-client/apiModules/users"
 
 function Blog({ blog, setEditBlog, removeBlog, setCreateBlogModal }: any) {
   const {user, setUser} = useContext(UserContext)
@@ -49,22 +52,58 @@ function Blog({ blog, setEditBlog, removeBlog, setCreateBlogModal }: any) {
   )
 }
 
-export default function BlogsList({ list, setCreateBlogModal, setEditBlog, removeBlog }: any) {
+export default function BlogsList({ list, setCreateBlogModal, setEditBlog, removeBlog, downloadableBlogs }: any) {
+  const [toggle, setToggle] = React.useState(false);
+  const [file, setFile] = React.useState<any>('');
+
+  function handleFileChange(event: any) {
+    setFile(event.target.files[0]);
+  }
+
   return (
       <SimpleLayout
         title="Blogs are a great way to share your thoughts and opinions with the world."
         intro="Check out are assortment of blogs.  We have a wide variety of topics to choose from.  If you would like to contribute to our site, create a blog."
       >
-            <div className="flex justify-end">
-                <button onClick={() => setCreateBlogModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Create Blog
-                </button>
+        <div className='flex flex-row justify-between w-full mb-5'>
+          <div className='flex'>
+            <p className='text-lg mr-3'>Downloadable Blogs</p>
+            <label className="switch">
+              <input type="checkbox" checked={toggle} onChange={() => setToggle(!toggle)}/>
+              <span className="slider round"></span>
+            </label>
+          </div>
+            { !toggle ? 
+            <button onClick={() => setCreateBlogModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Create Blog
+            </button>
+            :
+            <div>
+              <div className='flex mb-1'>
+                  <label className="block text-sm font-medium text-gray-700 mr-3">File</label>
+                  <input type="file" onChange={handleFileChange} name='file'/>
+              </div>
+              <button onClick={() => uploadStorageDocument(`blogs`, file)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Upload
+              </button>
             </div>
+            }
+        </div>
         <div className="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40">
           <div className="flex max-w-3xl flex-col space-y-16">
-            {list.map((blog: any) => (
+            { !toggle ? list.map((blog: any) => (
               <Blog key={blog.id} blog={blog} setEditBlog={setEditBlog} removeBlog={removeBlog} setCreateBlogModal={setCreateBlogModal} />
-            ))}
+            ))
+            :
+              <ul>
+                {downloadableBlogs.map((blog: any) => (
+                  <li key={blog} className='underline text-teal-500' onClick={() => downloadStorageDocument(`blogs/${blog}`, blog)}>
+                    <p>{blog}</p>
+                  </li>
+                ))
+                }
+              </ul>
+            }
           </div>
         </div>
       </SimpleLayout>
