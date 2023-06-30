@@ -1,5 +1,11 @@
 {
   "projects": {
     "default": "nxfirebasetemplate"
+  },
+  "targets": {},
+  "etags": {
+    "nxfirebasetemplate": {
+      "extensionInstances": {}
+    }
   }
 }

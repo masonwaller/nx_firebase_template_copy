@@ -31,7 +31,11 @@ const buildApiClientWithAuth = () => {
 
 export const apiClientWithAuth = buildApiClientWithAuth();
 
+console.log(window.location.hostname,'window.location.hostname', window.location.origin, 'window.location.origin')
+const baseApiUrl = window.location.hostname === 'localhost' ? 'http://localhost:3000/api': `${window.location.origin}/api`;
+console.log(baseApiUrl,'baseApiUrl')
+
 export const apiEndpoints = {
-  users: `${envVars.baseApiUrl}/users`,
-  blogs: `${envVars.baseApiUrl}/blogs`,
+  users: `${baseApiUrl}/users`, //envVars.baseApiUrl
+  blogs: `${baseApiUrl}/blogs`,
 };

@@ -22,7 +22,7 @@ export default function Header() {
   'https://www.gravatar.com/avatar/00000000000000000000000000000000';
   const userPhotoURL = user.picture || defaultUserPhotoURL;
 
-  const hasAdminAccess = user.roles.includes('Admin');
+  const hasAdminAccess = user.roles?.includes('Admin');
 
   useEffect(() => {
     const currentUrl = window.location.pathname.split('/')[1];

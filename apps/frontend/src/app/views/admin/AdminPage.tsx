@@ -10,7 +10,7 @@ export default function AdminPage() {
     const {user, setUser} = useContext(UserContext)
 
     useEffect(() => {
-        if(!user.roles.includes('Admin')){
+        if(!user.roles?.includes('Admin')){
             window.location.href = '/home'
         } else {
             searchUsers()

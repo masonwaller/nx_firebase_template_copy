@@ -8,7 +8,7 @@ export const environmentStrings = {
 export const getBaseApiUrlForEnv = (): string => {
     let baseURL;
     if (window.location.hostname !== 'localhost') {
-      baseURL = `${window.location.origin}/api/v0`;
+      baseURL = `${window.location.origin}/api`;
     } else {
       baseURL = `http://localhost:3000/api`;
     }
