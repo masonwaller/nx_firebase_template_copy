@@ -3,10 +3,10 @@ import { getStorage } from "@firebase/storage";
 
 
 const firebaseConfig = {
-  authDomain: "nxfirebasetemplate.firebaseapp.com",
-  databaseURL: "https://nxfirebasetemplate-default-rtdb.firebaseio.com",
-  projectId: "nxfirebasetemplate",
-  storageBucket: "nxfirebasetemplate.appspot.com",
+  authDomain: "nx-firebase-template-test.firebaseapp.com",
+  databaseURL: "https://nx-firebase-template-test-default-rtdb.firebaseio.com",
+  projectId: "nx-firebase-template-test",
+  storageBucket: "nx-firebase-template-test.appspot.com",
 };
 
 // Initialize Firebase

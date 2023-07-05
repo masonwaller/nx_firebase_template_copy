@@ -1,11 +1,5 @@
 {
   "projects": {
-    "default": "nxfirebasetemplate"
-  },
-  "targets": {},
-  "etags": {
-    "nxfirebasetemplate": {
-      "extensionInstances": {}
-    }
+    "default": "nx-firebase-template-test"
   }
 }

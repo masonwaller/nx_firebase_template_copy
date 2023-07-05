@@ -13,7 +13,7 @@
     "test:lint": "npm run lint && npm run test",
     "test:affected": "nx affected:test --codeCoverage",
     "test:codeCoverage": "nx run-many --all --target=test --skip-nx-cache --codeCoverage",
-    "deploy:firebase:api:dev": "nx run server:build-firebase --skip-nx-cache && firebase use nxfirebasetemplate && firebase deploy --only functions"
+    "deploy:firebase:api:dev": "nx run server:build-firebase --skip-nx-cache && firebase use nx-firebase-template-test && firebase deploy --only functions"
   },
   "private": true,
   "dependencies": {

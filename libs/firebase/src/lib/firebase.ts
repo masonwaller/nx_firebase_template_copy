@@ -9,7 +9,7 @@ import * as functions from 'firebase-functions';
 // import { FirebaseFirestore } from '@firebase/firestore-types';
 
 export const settings = {
-  project_id: 'nxfirebasetemplate',
+  project_id: 'nx-firebase-template-test',
 };
 
 if (functions.config().project && functions.config().project.id) {
