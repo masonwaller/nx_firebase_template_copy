@@ -9,7 +9,7 @@ import { Login } from '../login/Login';
 
 export const AccountPage = () => {
     const {user, setUser} = React.useContext(UserContext);
-
+    
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',

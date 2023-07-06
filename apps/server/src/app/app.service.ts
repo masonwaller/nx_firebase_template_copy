@@ -6,6 +6,7 @@ export class AppService {
   getData(): { message: string } {
     return { message: 'Hello API' };
   }
+  
   // getUsers(): Promise<any> {
   //   console.log('getUsers')
   //   return getCollectionData({

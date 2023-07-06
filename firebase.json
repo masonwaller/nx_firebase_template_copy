@@ -3,12 +3,7 @@
     {
       "source": "dist/apps/server-firebase",
       "codebase": "default",
-      "ignore": [
-        "node_modules",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log"
-      ],
+      "predeploy": [],
       "runtime": "nodejs18"
     }
   ],
@@ -27,6 +22,10 @@
       "**/node_modules/**"
     ],
     "rewrites": [
+      {
+        "source": "/api/**",
+        "function": "apiv1"
+      },
       {
         "source": "**",
         "destination": "/index.html"
