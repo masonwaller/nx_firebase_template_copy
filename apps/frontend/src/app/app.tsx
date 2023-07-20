@@ -10,7 +10,7 @@ export const UserContext = React.createContext({user: {firstName: null, lastName
 
 export function App() {
 
-  const [user, setUser] = React.useState({firstName: null, lastName: null, id: null, joinDate: null, email: null, userType: 'Reader', picture: null, name: null, roles: ['None']});
+  const [user, setUser] = React.useState<any>({firstName: null, lastName: null, id: null, joinDate: null, email: null, userType: 'Reader', picture: null, name: null, roles: ['None']});
 
   useEffect(() => {
     const user = localStorage.getItem('user');
@@ -22,6 +22,16 @@ export function App() {
   useEffect(() => {
     console.log(user)
   }, [user])
+
+  // this is for cypress testing, to have a test user logged in
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    if(window.Cypress){
+      const user = {firstName: 'Test', lastName: 'User', id: 'test', joinDate: '05/05/2023', email: 'testUser@test.com', userType: 'Reader', picture: 'www.google.com', name: 'Test User', roles: ['None']}
+      setUser(user)
+    }
+  }, [])
 
   return (
     <UserContext.Provider value={{user, setUser}}>
