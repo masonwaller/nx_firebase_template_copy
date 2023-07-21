@@ -31,6 +31,7 @@ export function App() {
       const user = {firstName: 'Test', lastName: 'User', id: 'test', joinDate: '05/05/2023', email: 'testUser@test.com', userType: 'Reader', picture: 'www.google.com', name: 'Test User', roles: ['None']}
       setUser(user)
     }
+
   }, [])
 
   return (
