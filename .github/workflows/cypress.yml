@@ -11,8 +11,6 @@ jobs:
       matrix:
         containers: [1, 2] # Uses 5 parallel instances
     steps:
-      # - name: Checkout
-      #   uses: actions/checkout@v3
       - name: Cypress run
         # Uses the official Cypress GitHub action https://github.com/cypress-io/github-action
         uses: cypress-io/github-action@v4
@@ -34,3 +32,6 @@ jobs:
          - run: npm ci --force
          - run: npm run build --if-present
          - run: npx nx e2e frontend-e2e --skip-cache
+
+      # - name: Checkout
+      #   uses: actions/checkout@v3
