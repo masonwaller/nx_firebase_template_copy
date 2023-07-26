@@ -44,7 +44,7 @@ jobs:
           # Records to Cypress Cloud 
           # https://docs.cypress.io/guides/cloud/projects#Set-up-a-project-to-record
           browser: chrome
-          # spec: "apps/frontend-e2e/src/e2e/app.cy.tsx"
+          spec: "apps/frontend-e2e/src/e2e/app.cy.tsx"
           record: true
           parallel: true # Runs test in parallel using settings above
         env:
@@ -53,9 +53,3 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           # Creating a token https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  run-tests:
-    runs-on: ubuntu-latest
-    needs: install
-    steps:
-      - name: Run Tests
-        run: npm run e2e frontend-e2e --skip-cache
