@@ -22,6 +22,7 @@ jobs:
           path: dist/apps/frontend
   cypress-run:
     runs-on: ubuntu-latest
+    needs: install
     # Runs tests in parallel with matrix strategy https://docs.cypress.io/guides/guides/parallelization
     # https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
     # Also see warning here https://github.com/cypress-io/github-action#parallel
@@ -45,7 +46,7 @@ jobs:
           browser: chrome
           record: true
           parallel: true # Runs test in parallel using settings above
-          spec: "apps/frontend-e2e/src/**/*"
+        spec: "apps/frontend-e2e/src/**/*"
         env:
           # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
           # in GitHub repo → Settings → Secrets → Actions
