@@ -47,7 +47,7 @@ jobs:
           # spec: "apps/frontend-e2e/src/e2e/app.cy.tsx"
           record: true
           parallel: true # Runs test in parallel using settings above
-          run: npx nx e2e frontend-e2e --skip-cache
+        run: npx nx e2e frontend-e2e --skip-cache
         env:
           # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
           # in GitHub repo → Settings → Secrets → Actions
