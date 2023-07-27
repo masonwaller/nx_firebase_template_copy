@@ -20,6 +20,15 @@ jobs:
           name: build
           if-no-files-found: error
           path: dist/apps/frontend
+        # Setup gcloud CLI
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
+        
+      - id: 'auth'
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v0
+        with: 
+          credentials_json: '${{ secrets.GCP_PRIVATE_KEY }}'
   cypress-run:
     runs-on: ubuntu-latest
     needs: install
