@@ -20,15 +20,6 @@ jobs:
           name: build
           if-no-files-found: error
           path: dist/apps/frontend
-        # Setup gcloud CLI
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0
-        
-      - id: 'auth'
-        name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v0
-        with: 
-          credentials_json: '${{ secrets.GCP_PRIVATE_KEY }}'
   cypress-run:
     runs-on: ubuntu-latest
     needs: install
@@ -42,6 +33,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        # Setup gcloud CLI
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
+        
+      - id: 'auth'
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v0
+        with: 
+          credentials_json: '${{ secrets.GCP_PRIVATE_KEY }}'
       - name: Cypress run
         # Uses the official Cypress GitHub action https://github.com/cypress-io/github-action
         uses: cypress-io/github-action@v4
@@ -63,3 +63,4 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           # Creating a token https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GCP_PRIVATE_KEY: ${{ secrets.GCP_PRIVATE_KEY }}
