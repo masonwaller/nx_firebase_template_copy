@@ -32,7 +32,7 @@ const buildApiClientWithAuth = () => {
 export const apiClientWithAuth = buildApiClientWithAuth();
 
 console.log(window.location.hostname,'window.location.hostname', window.location.origin, 'window.location.origin')
-const baseApiUrl = window.location.hostname === 'localhost' ? 'http://localhost:3000/api': `${window.location.origin}/api`;
+const baseApiUrl = window.location.hostname === 'localhost' || window.location.hostname === 'github' ? 'http://localhost:3000/api': `${window.location.origin}/api`;
 console.log(baseApiUrl,'baseApiUrl')
 
 export const apiEndpoints = {
