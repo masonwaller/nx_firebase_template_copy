@@ -20,7 +20,6 @@ jobs:
           name: build
           if-no-files-found: error
           path: dist/apps/frontend
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_NX_FIREBASE_TEMPLATE_TEST }}'
   cypress-run:
     runs-on: ubuntu-latest
     needs: install
@@ -66,3 +65,5 @@ jobs:
           # Creating a token https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GCP_PRIVATE_KEY: ${{ secrets.GCP_PRIVATE_KEY }}
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_NX_FIREBASE_TEMPLATE_TEST }}'
+
