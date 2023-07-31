@@ -6,6 +6,7 @@ import { createData, deleteData, getCollectionData, getDataById, updateData } fr
 export class BlogsService {
 
   getBlogs(): Promise<any> {
+    console.log('hit*****************')
     return getCollectionData({
       collection: 'blogs',
       options: {
