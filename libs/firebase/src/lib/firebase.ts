@@ -52,6 +52,7 @@ export async function getCollectionData(
   params: getCollectionDataInterface
 ): Promise<any[]> {
   //FirebaseFirestore.DocumentData[]
+  console.log('----------------', db)
   let query: any = db.collection(params.collection);
   let order = false;
   let pagination: any = false;
