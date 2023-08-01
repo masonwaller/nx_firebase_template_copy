@@ -26,11 +26,6 @@ const baseAppConfig = {
   projectId: settings.project_id,
   databaseURL: `https://${settings.project_id}-default-rtdb.firebaseio.com`,
   storageBucket: `${settings.project_id}.appspot.com`,
-  apiKey: "AIzaSyDbrwB83FNwy9yRLAGhRkNovsJIbFP_GrY",
-  authDomain: "nx-firebase-template-test.firebaseapp.com",
-  messagingSenderId: "441640857100",
-  appId: "1:441640857100:web:adb1a1b6a43e40e7d78829",
-  measurementId: "G-PKP2SNKFC0"
 }
 
 if(serviceAccount) {
