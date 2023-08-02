@@ -4,6 +4,7 @@ describe('frontend', () => {
   beforeEach(() => cy.visit('/blogs'));
 
   it('should display blogs header', () => {
+    cy.task('log', 'This will be output to the terminal=========================')
     cy.get('h1').contains('Blogs are a great way to share your thoughts and opinions with the world.');
   });
 
