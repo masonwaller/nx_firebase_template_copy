@@ -32,6 +32,8 @@ if(serviceAccount) {
   baseAppConfig['credential'] = admin.credential.cert(JSON.parse(serviceAccount));
 }
 
+console.log('baseAppConfig', baseAppConfig)
+
 initializeApp(baseAppConfig);
 
 export const db = getFirestore();
